@@ -74,7 +74,7 @@ impl Id {
 
     #[cfg(feature = "accesskit")]
     pub(crate) fn accesskit_id(&self) -> accesskit::NodeId {
-        std::num::NonZeroU64::new(self.0).unwrap().into()
+        core::num::NonZeroU64::new(self.0).unwrap().into()
     }
 }
 

@@ -2,11 +2,11 @@
 resolver = "2"
 members = [
     "crates/ecolor",
+    "crates/egui_demo_lib",
     "crates/egui_extras",
     "crates/egui",
     "crates/emath",
     "crates/epaint",
-    "crates/std",
 ]
 
 [profile.release]
