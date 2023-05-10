@@ -1,7 +1,11 @@
-use std::{collections::BTreeMap, sync::Arc};
+use spin::{Mutex, MutexGuard};
+use std::{
+    collections::{BTreeMap, HashMap},
+    sync::Arc,
+};
+use std::{format, vec, String, ToOwned, Vec};
 
 use crate::{
-    mutex::{Mutex, MutexGuard},
     text::{
         font::{Font, FontImpl},
         Galley, LayoutJob,
@@ -189,15 +193,13 @@ impl Default for FontTweak {
 
 // ----------------------------------------------------------------------------
 
-fn ab_glyph_font_from_font_data(name: &str, data: &FontData) -> ab_glyph::FontArc {
+fn ab_glyph_font_from_font_data(name: &str, data: &FontData) -> ab_glyph::FontVec {
     match &data.font {
         std::borrow::Cow::Borrowed(bytes) => {
-            ab_glyph::FontRef::try_from_slice_and_index(bytes, data.index)
-                .map(ab_glyph::FontArc::from)
+            ab_glyph::FontVec::try_from_vec_and_index(bytes.to_vec(), data.index)
         }
         std::borrow::Cow::Owned(bytes) => {
             ab_glyph::FontVec::try_from_vec_and_index(bytes.clone(), data.index)
-                .map(ab_glyph::FontArc::from)
         }
     }
     .unwrap_or_else(|err| panic!("Error parsing {:?} TTF/OTF font file: {}", name, err))
@@ -573,7 +575,7 @@ pub struct FontsImpl {
     definitions: FontDefinitions,
     atlas: Arc<Mutex<TextureAtlas>>,
     font_impl_cache: FontImplCache,
-    sized_family: ahash::HashMap<(HashableF32, FontFamily), Font>,
+    sized_family: HashMap<(HashableF32, FontFamily), Font>,
 }
 
 impl FontsImpl {
@@ -680,19 +682,21 @@ impl GalleyCache {
     fn layout(&mut self, fonts: &mut FontsImpl, job: LayoutJob) -> Arc<Galley> {
         let hash = crate::util::hash(&job); // TODO(emilk): even faster hasher?
 
-        match self.cache.entry(hash) {
-            std::collections::hash_map::Entry::Occupied(entry) => {
-                let cached = entry.into_mut();
-                cached.last_used = self.generation;
-                cached.galley.clone()
+        match self.cache.get_mut(&hash) {
+            Some(entry) => {
+                entry.last_used = self.generation;
+                entry.galley.clone()
             }
-            std::collections::hash_map::Entry::Vacant(entry) => {
+            None => {
                 let galley = super::layout(fonts, job.into());
                 let galley = Arc::new(galley);
-                entry.insert(CachedGalley {
-                    last_used: self.generation,
-                    galley: galley.clone(),
-                });
+                self.cache.insert(
+                    hash,
+                    CachedGalley {
+                        last_used: self.generation,
+                        galley: galley.clone(),
+                    },
+                );
                 galley
             }
         }
@@ -717,10 +721,10 @@ impl GalleyCache {
 struct FontImplCache {
     atlas: Arc<Mutex<TextureAtlas>>,
     pixels_per_point: f32,
-    ab_glyph_fonts: BTreeMap<String, (FontTweak, ab_glyph::FontArc)>,
+    ab_glyph_fonts: BTreeMap<String, (FontTweak, Arc<ab_glyph::FontVec>)>,
 
     /// Map font pixel sizes and names to the cached [`FontImpl`].
-    cache: ahash::HashMap<(u32, String), Arc<FontImpl>>,
+    cache: HashMap<(u32, String), Arc<FontImpl>>,
 }
 
 impl FontImplCache {
@@ -733,7 +737,7 @@ impl FontImplCache {
             .iter()
             .map(|(name, font_data)| {
                 let tweak = font_data.tweak;
-                let ab_glyph = ab_glyph_font_from_font_data(name, font_data);
+                let ab_glyph = Arc::new(ab_glyph_font_from_font_data(name, font_data));
                 (name.clone(), (tweak, ab_glyph))
             })
             .collect();

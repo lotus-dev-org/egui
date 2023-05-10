@@ -1,4 +1,5 @@
 use super::*;
+use std::{format, vec, String, Vec};
 
 /// The color and fuzziness of a fuzzy shape.
 /// Can be used for a rectangular shadow with a soft penumbra.

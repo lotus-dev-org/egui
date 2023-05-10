@@ -9,9 +9,19 @@
 #![allow(clippy::float_cmp)]
 #![allow(clippy::manual_range_contains)]
 #![forbid(unsafe_code)]
+#![no_std]
 
 #[cfg(feature = "chrono")]
 mod datepicker;
+
+pub use std::{
+    borrow::ToOwned,
+    boxed::Box,
+    collections::{HashMap, HashSet},
+    format,
+    string::ToString,
+    vec, String, Vec,
+};
 
 pub mod image;
 mod layout;
@@ -34,10 +44,10 @@ macro_rules! log_err {
         #[cfg(feature = "log")]
         log::error!($fmt, $($arg)*);
 
-        #[cfg(not(feature = "log"))]
-        eprintln!(
-            concat!("egui_extras: ", $fmt), $($arg)*
-        );
+        // #[cfg(not(feature = "log"))]
+        // eprintln!(
+        //     concat!("egui_extras: ", $fmt), $($arg)*
+        // );
     }};
 }
 pub(crate) use log_err;

@@ -20,7 +20,7 @@ use super::{
     Sense, TextStyle, Ui, Vec2,
 };
 use crate::{widgets::*, *};
-use epaint::mutex::RwLock;
+use spin::RwLock;
 use std::sync::Arc;
 
 /// What is saved between frames.

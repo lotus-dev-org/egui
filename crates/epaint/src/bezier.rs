@@ -1,5 +1,6 @@
 #![allow(clippy::many_single_char_names)]
 use std::ops::Range;
+use std::{format, vec, String, Vec};
 
 use crate::{shape::Shape, Color32, PathShape, Stroke};
 use emath::*;

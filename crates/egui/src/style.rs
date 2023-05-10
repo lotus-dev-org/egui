@@ -5,6 +5,7 @@
 use crate::{ecolor::*, emath::*, FontFamily, FontId, Response, RichText, WidgetText};
 use epaint::{Rounding, Shadow, Stroke};
 use std::collections::BTreeMap;
+use std::{borrow::ToOwned, string::ToString, Vec};
 
 // ----------------------------------------------------------------------------
 

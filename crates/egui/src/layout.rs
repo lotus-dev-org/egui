@@ -1,5 +1,6 @@
 use crate::{egui_assert, emath::*, Align};
 use std::f32::INFINITY;
+use std::string::ToString;
 
 // ----------------------------------------------------------------------------
 

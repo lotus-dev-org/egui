@@ -1,9 +1,8 @@
 // #![warn(missing_docs)]
 
+use spin::RwLock;
 use std::hash::Hash;
 use std::sync::Arc;
-
-use epaint::mutex::RwLock;
 
 use crate::{
     containers::*, ecolor::*, epaint::text::Fonts, layout::*, menu::MenuState, placer::Placer,

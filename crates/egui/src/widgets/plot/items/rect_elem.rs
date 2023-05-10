@@ -2,7 +2,9 @@ use super::{Orientation, PlotPoint};
 use crate::plot::transform::{PlotBounds, PlotTransform};
 use epaint::emath::NumExt;
 use epaint::{Color32, Rgba, Stroke};
-
+use std::{
+    borrow::ToOwned, boxed::Box, collections::HashMap, format, string::ToString, vec, String, Vec,
+};
 /// Trait that abstracts from rectangular 'Value'-like elements, such as bars or boxes
 pub(super) trait RectElement {
     fn name(&self) -> &str;

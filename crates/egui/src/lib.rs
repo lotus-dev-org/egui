@@ -299,6 +299,16 @@
 #![allow(clippy::float_cmp)]
 #![allow(clippy::manual_range_contains)]
 #![forbid(unsafe_code)]
+#![no_std]
+
+pub use std::{
+    borrow::ToOwned,
+    boxed::Box,
+    collections::{HashMap, HashSet},
+    format,
+    string::ToString,
+    vec, String, Vec,
+};
 
 mod animation_manager;
 pub mod containers;
@@ -337,7 +347,6 @@ pub use ecolor::hex_color;
 pub use ecolor::{Color32, Rgba};
 pub use emath::{lerp, pos2, remap, remap_clamp, vec2, Align, Align2, NumExt, Pos2, Rect, Vec2};
 pub use epaint::{
-    mutex,
     text::{FontData, FontDefinitions, FontFamily, FontId, FontTweak},
     textures::{TextureFilter, TextureOptions, TexturesDelta},
     ClippedPrimitive, ColorImage, FontImage, ImageData, Mesh, PaintCallback, PaintCallbackInfo,

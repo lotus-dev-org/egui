@@ -1,6 +1,9 @@
 //! All the data egui returns to the backend at the end of each frame.
 
 use crate::WidgetType;
+use std::{
+    borrow::ToOwned, boxed::Box, collections::HashMap, format, string::ToString, vec, String, Vec,
+};
 
 /// What egui emits each frame from [`crate::Context::run`].
 ///

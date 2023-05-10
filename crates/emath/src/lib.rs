@@ -21,8 +21,10 @@
 
 #![allow(clippy::float_cmp)]
 #![forbid(unsafe_code)]
+#![no_std]
 
 use std::ops::{Add, Div, Mul, RangeInclusive, Sub};
+use std::{format, String};
 
 // ----------------------------------------------------------------------------
 

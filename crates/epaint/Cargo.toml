@@ -64,20 +64,21 @@ log = ["dep:log"]
 mint = ["emath/mint"]
 
 ## Allow serialization using [`serde`](https://docs.rs/serde).
-serde = ["dep:serde", "ahash/serde", "emath/serde", "ecolor/serde"]
+serde = ["dep:serde", "emath/serde", "ecolor/serde"]
 
 ## Change Vertex layout to be compatible with unity
 unity = []
 
 [dependencies]
+spin = "0.9.8"
+hashbrown = { version = "0.13.2", features = ["ahash", "inline-more", "serde"] }
+std = { path = "../std/" }
+ahash = { version = "0.8.3", default-features = false, features = ["runtime-rng", "serde"] }
+
 emath = { version = "0.21.0", path = "../emath" }
 ecolor = { version = "0.21.0", path = "../ecolor" }
 
-ab_glyph = "0.2.11"
-ahash = { version = "0.8.1", default-features = false, features = [
-  "no-rng", # we don't need DOS-protection, so we let users opt-in to it instead
-  "std",
-] }
+ab_glyph = { version = "0.2.21", default-features = false, features = ["libm", "variable-fonts"] }
 nohash-hasher = "0.2"
 
 #! ### Optional dependencies
@@ -103,8 +104,3 @@ atomic_refcell = "0.1" # Used instead of parking_lot on on wasm. See https://git
 
 [dev-dependencies]
 criterion = { version = "0.4", default-features = false }
-
-
-[[bench]]
-name = "benchmark"
-harness = false

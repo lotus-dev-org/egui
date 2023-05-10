@@ -1,6 +1,5 @@
 //! Simple plotting library.
 
-use ahash::HashMap;
 use std::ops::RangeInclusive;
 
 use crate::*;
@@ -102,7 +101,7 @@ struct PlotMemory {
     /// or if the bounds should be calculated based by included point or auto bounds.
     bounds_modified: AxisBools,
     hovered_entry: Option<String>,
-    hidden_items: ahash::HashSet<String>,
+    hidden_items: HashSet<String>,
     last_plot_transform: PlotTransform,
     /// Allows to remember the first click position when performing a boxed zoom
     last_click_pos_for_zoom: Option<Pos2>,

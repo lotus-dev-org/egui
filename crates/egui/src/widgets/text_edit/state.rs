@@ -1,6 +1,5 @@
+use spin::Mutex;
 use std::sync::Arc;
-
-use crate::mutex::Mutex;
 
 use crate::*;
 

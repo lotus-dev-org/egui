@@ -1,6 +1,7 @@
 //! Collect statistics about what is being painted.
 
 use crate::*;
+use std::{format, vec, String, Vec};
 
 /// Size of the elements in a vector/array.
 #[derive(Clone, Copy, PartialEq)]

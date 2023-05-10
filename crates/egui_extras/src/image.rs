@@ -1,4 +1,6 @@
-use egui::{mutex::Mutex, TextureFilter, TextureOptions};
+use egui::{TextureFilter, TextureOptions};
+use spin::Mutex;
+use std::String;
 
 #[cfg(feature = "svg")]
 pub use usvg::FitTo;

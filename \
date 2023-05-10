@@ -424,8 +424,6 @@ impl IdTypeMap {
         self.0
             .entry(hash)
             .or_insert_with(|| Element::new_temp(insert_with()))
-            .get_mut_temp()
-            .unwrap()
     }
 
     pub fn get_persisted_mut_or_insert_with<T: SerializableAny>(
@@ -435,11 +433,16 @@ impl IdTypeMap {
     ) -> &mut T {
         let hash = hash(TypeId::of::<T>(), id);
 
-        self.0
-            .entry(hash)
-            .or_insert_with(|| Element::new_persisted(insert_with()))
-            .get_mut_persisted()
-            .unwrap()
+        match self.0.get_mut(&hash) {
+            None => self
+                .0
+                .insert(hash, Element::new_persisted(insert_with()))
+                .as_mut()
+                .unwrap()
+                .get_mut_persisted()
+                .unwrap(),
+            Some(occupied) => occupied.get_persisted_mut_or_insert_with(insert_with),
+        }
     }
 
     /// Remove the state of this type an id.

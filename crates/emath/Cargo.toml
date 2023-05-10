@@ -29,6 +29,7 @@ extra_asserts = []
 
 
 [dependencies]
+std = { path = "../std/" }
 #! ### Optional dependencies
 
 ## [`bytemuck`](https://docs.rs/bytemuck) enables you to cast `emath` types to `&[u8]`.

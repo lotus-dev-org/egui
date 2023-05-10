@@ -2,6 +2,7 @@
 
 use std::ops::RangeInclusive;
 use std::{any::Any, sync::Arc};
+use std::{format, vec, String, ToString, Vec};
 
 use crate::{
     text::{FontId, Fonts, Galley},

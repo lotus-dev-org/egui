@@ -1,8 +1,10 @@
+use super::{add_rulers_and_text, highlighted_color, Orientation, PlotConfig, RectElement};
 use crate::emath::NumExt;
 use crate::epaint::{Color32, RectShape, Rounding, Shape, Stroke};
-
-use super::{add_rulers_and_text, highlighted_color, Orientation, PlotConfig, RectElement};
 use crate::plot::{BoxPlot, Cursor, PlotPoint, PlotTransform};
+use std::{
+    borrow::ToOwned, boxed::Box, collections::HashMap, format, string::ToString, vec, String, Vec,
+};
 
 /// Contains the values of a single box in a box plot.
 #[derive(Clone, Debug, PartialEq)]

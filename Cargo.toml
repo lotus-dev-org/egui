@@ -2,17 +2,11 @@
 resolver = "2"
 members = [
     "crates/ecolor",
-    "crates/egui_demo_app",
-    "crates/egui_demo_lib",
     "crates/egui_extras",
-    "crates/egui_glow",
-    "crates/egui-wgpu",
-    "crates/egui-winit",
     "crates/egui",
     "crates/emath",
     "crates/epaint",
-
-    "examples/*",
+    "crates/std",
 ]
 
 [profile.release]
@@ -35,4 +29,4 @@ opt-level = 2 # fast and small wasm, basically same as `opt-level = 's'`
 opt-level = 2
 
 [workspace.dependencies]
-thiserror = "1.0.37"
+thiserror-no-std = "2.0.2"

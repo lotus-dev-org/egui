@@ -1,4 +1,7 @@
+use hashbrown::hash_map::OccupiedEntry;
+
 use crate::{ImageData, ImageDelta, TextureId};
+use std::{collections::*, format, vec, String, Vec};
 
 // ----------------------------------------------------------------------------
 
@@ -10,7 +13,7 @@ pub struct TextureManager {
     /// We allocate texture id:s linearly.
     next_id: u64,
     /// Information about currently allocated textures.
-    metas: ahash::HashMap<TextureId, TextureMeta>,
+    metas: HashMap<TextureId, TextureMeta>,
     delta: TexturesDelta,
 }
 
@@ -67,15 +70,18 @@ impl TextureManager {
 
     /// Free an existing texture.
     pub fn free(&mut self, id: TextureId) {
-        if let std::collections::hash_map::Entry::Occupied(mut entry) = self.metas.entry(id) {
-            let meta = entry.get_mut();
+        let mut should_remove = false;
+
+        if let Some(meta) = self.metas.get_mut(&id) {
             meta.retain_count -= 1;
-            if meta.retain_count == 0 {
-                entry.remove();
-                self.delta.free.push(id);
-            }
+            should_remove = meta.retain_count == 0;
         } else {
             crate::epaint_assert!(false, "Tried freeing texture {id:?} which is not allocated");
+        }
+
+        if should_remove {
+            self.metas.remove(&id);
+            self.delta.free.push(id);
         }
     }
 

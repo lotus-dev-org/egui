@@ -4,7 +4,9 @@
 //! Enter [`FrameCache`]: it caches the results of a computation for one frame.
 //! If it is still used next frame, it is not recomputed.
 //! If it is not used next frame, it is evicted from the cache to save memory.
-
+use std::{
+    borrow::ToOwned, boxed::Box, collections::HashMap, format, string::ToString, vec, String, Vec,
+};
 /// Something that does an expensive computation that we want to cache
 /// to save us from recomputing it each frame.
 pub trait ComputerMut<Key, Value>: 'static + Send + Sync {
@@ -59,15 +61,14 @@ impl<Value, Computer> FrameCache<Value, Computer> {
     {
         let hash = crate::util::hash(key);
 
-        match self.cache.entry(hash) {
-            std::collections::hash_map::Entry::Occupied(entry) => {
-                let cached = entry.into_mut();
-                cached.0 = self.generation;
-                cached.1.clone()
+        match self.cache.get_mut(&hash) {
+            Some(entry) => {
+                entry.0 = self.generation;
+                entry.1.clone()
             }
-            std::collections::hash_map::Entry::Vacant(entry) => {
+            None => {
                 let value = self.computer.compute(key);
-                entry.insert((self.generation, value.clone()));
+                self.cache.insert(hash, (self.generation, value.clone()));
                 value
             }
         }
@@ -119,7 +120,7 @@ impl<Value: 'static + Send + Sync, Computer: 'static + Send + Sync> CacheTrait
 /// ```
 #[derive(Default)]
 pub struct CacheStorage {
-    caches: ahash::HashMap<std::any::TypeId, Box<dyn CacheTrait>>,
+    caches: HashMap<std::any::TypeId, Box<dyn CacheTrait>>,
 }
 
 impl CacheStorage {

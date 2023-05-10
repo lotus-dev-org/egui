@@ -3,6 +3,7 @@ mod touch_state;
 use crate::data::input::*;
 use crate::{emath::*, util::History};
 use std::collections::{BTreeMap, HashSet};
+use std::*;
 
 pub use crate::data::input::Key;
 pub use touch_state::MultiTouchInfo;
@@ -182,7 +183,7 @@ impl InputState {
                         let first_press = keys_down.insert(*key);
                         *repeat = !first_press;
                     } else {
-                        keys_down.remove(key);
+                        keys_down.remove(&*key);
                     }
                 }
                 Event::Scroll(delta) => {

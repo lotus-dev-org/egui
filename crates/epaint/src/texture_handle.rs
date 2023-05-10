@@ -1,9 +1,10 @@
+use spin::RwLock;
 use std::sync::Arc;
 
 use crate::{
-    emath::NumExt, mutex::RwLock, textures::TextureOptions, ImageData, ImageDelta, TextureId,
-    TextureManager,
+    emath::NumExt, textures::TextureOptions, ImageData, ImageDelta, TextureId, TextureManager,
 };
+use std::{format, vec, String, Vec};
 
 /// Used to paint images.
 ///

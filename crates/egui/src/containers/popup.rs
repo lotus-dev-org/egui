@@ -8,7 +8,7 @@ use crate::*;
 #[derive(Clone, Debug, Default)]
 pub(crate) struct TooltipState {
     last_common_id: Option<Id>,
-    individual_ids_and_sizes: ahash::HashMap<usize, (Id, Vec2)>,
+    individual_ids_and_sizes: HashMap<usize, (Id, Vec2)>,
 }
 
 impl TooltipState {

@@ -1,4 +1,5 @@
 use epaint::{emath::lerp, vec2, Color32, Pos2, Shape, Stroke};
+use std::Vec;
 
 use crate::{Response, Sense, Ui, Widget};
 

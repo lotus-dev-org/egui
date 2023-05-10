@@ -1,4 +1,5 @@
 use crate::*;
+use std::{format, vec, String, Vec};
 
 pub fn adjust_colors(shape: &mut Shape, adjust_color: &impl Fn(&mut Color32)) {
     #![allow(clippy::match_same_arms)]

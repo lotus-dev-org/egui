@@ -62,13 +62,11 @@ unity = ["epaint/unity"]
 
 
 [dependencies]
+spin = "0.9.8"
 epaint = { version = "0.21.0", path = "../epaint", default-features = false }
-
-ahash = { version = "0.8.1", default-features = false, features = [
-    "no-rng", # we don't need DOS-protection, so we let users opt-in to it instead
-    "std",
-] }
+ahash = { version = "0.8.3", default-features = false, features = ["runtime-rng", "serde"] }
 nohash-hasher = "0.2"
+std = { path = "../std/" }
 
 #! ### Optional dependencies
 ## Exposes detailed accessibility implementation required by platform

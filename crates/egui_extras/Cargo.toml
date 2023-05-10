@@ -37,6 +37,8 @@ log = ["dep:log", "egui/log"]
 
 
 [dependencies]
+spin = "0.9.8"
+std = { path = "../std/" }
 egui = { version = "0.21.0", path = "../egui", default-features = false }
 
 serde = { version = "1", features = ["derive"] }

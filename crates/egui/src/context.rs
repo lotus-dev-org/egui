@@ -6,7 +6,9 @@ use crate::{
     input_state::*, layers::GraphicLayers, memory::Options, os::OperatingSystem,
     output::FullOutput, util::IdTypeMap, TextureHandle, *,
 };
-use epaint::{mutex::*, stats::*, text::Fonts, TessellationOptions, *};
+use epaint::{stats::*, text::Fonts, TessellationOptions, *};
+use spin::RwLock;
+use std::collections::HashMap;
 
 /// Information given to the backend about when it is time to repaint the ui.
 ///
@@ -156,10 +158,10 @@ struct ContextImpl {
     repaint: Repaint,
 
     /// Written to during the frame.
-    layer_rects_this_frame: ahash::HashMap<LayerId, Vec<(Id, Rect)>>,
+    layer_rects_this_frame: HashMap<LayerId, Vec<(Id, Rect)>>,
 
     /// Read
-    layer_rects_prev_frame: ahash::HashMap<LayerId, Vec<(Id, Rect)>>,
+    layer_rects_prev_frame: HashMap<LayerId, Vec<(Id, Rect)>>,
 
     #[cfg(feature = "accesskit")]
     is_accesskit_enabled: bool,

@@ -1,7 +1,9 @@
+use crate::plot::transform::PlotBounds;
 use epaint::{Pos2, Shape, Stroke, Vec2};
 use std::ops::{Bound, RangeBounds, RangeInclusive};
-
-use crate::plot::transform::PlotBounds;
+use std::{
+    borrow::ToOwned, boxed::Box, collections::HashMap, format, string::ToString, vec, String, Vec,
+};
 
 /// A point coordinate in the plot.
 ///

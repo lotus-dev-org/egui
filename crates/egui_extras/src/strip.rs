@@ -4,6 +4,7 @@ use crate::{
     Size,
 };
 use egui::{Response, Ui};
+use std::Vec;
 
 /// Builder for creating a new [`Strip`].
 ///

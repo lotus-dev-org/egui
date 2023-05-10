@@ -2,6 +2,7 @@
 
 use std::ops::Range;
 use std::sync::Arc;
+use std::{format, vec, String, Vec};
 
 use super::{cursor::*, font::UvRect};
 use crate::{Color32, FontId, Mesh, Stroke};

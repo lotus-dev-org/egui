@@ -2,6 +2,8 @@
 
 use crate::emath::*;
 
+use std::{format, vec, String, Vec};
+
 /// What the integrations provides to egui at the start of each frame.
 ///
 /// Set the values that make sense, leave the rest at their `Default::default()`.
@@ -135,7 +137,7 @@ impl RawInput {
 }
 
 /// A file about to be dropped into egui.
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct HoveredFile {
     /// Set by the `egui-winit` backend.
@@ -146,7 +148,7 @@ pub struct HoveredFile {
 }
 
 /// A file dropped into egui.
-#[derive(Clone, Debug, Default, PartialEq, Eq)]
+#[derive(Clone, Debug, Default, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Deserialize, serde::Serialize))]
 pub struct DroppedFile {
     /// Set by the `egui-winit` backend.

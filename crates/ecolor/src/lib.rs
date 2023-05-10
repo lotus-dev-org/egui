@@ -9,6 +9,7 @@
 //!
 
 #![allow(clippy::wrong_self_convention)]
+#![no_std]
 
 #[cfg(feature = "cint")]
 mod cint_impl;

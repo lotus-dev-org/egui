@@ -11,12 +11,12 @@
 
 #![allow(clippy::float_cmp)]
 #![allow(clippy::manual_range_contains)]
-#![forbid(unsafe_code)]
+// #![forbid(unsafe_code)]
+#![no_std]
 
 mod bezier;
 pub mod image;
 mod mesh;
-pub mod mutex;
 mod shadow;
 mod shape;
 pub mod shape_transform;
@@ -50,7 +50,6 @@ pub use {
 pub use ecolor::{Color32, Hsva, HsvaGamma, Rgba};
 pub use emath::{pos2, vec2, Pos2, Rect, Vec2};
 
-pub use ahash;
 pub use ecolor;
 pub use emath;
 

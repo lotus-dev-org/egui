@@ -1,8 +1,10 @@
+use super::{add_rulers_and_text, highlighted_color, Orientation, PlotConfig, RectElement};
 use crate::emath::NumExt;
 use crate::epaint::{Color32, RectShape, Rounding, Shape, Stroke};
-
-use super::{add_rulers_and_text, highlighted_color, Orientation, PlotConfig, RectElement};
 use crate::plot::{BarChart, Cursor, PlotPoint, PlotTransform};
+use std::{
+    borrow::ToOwned, boxed::Box, collections::HashMap, format, string::ToString, vec, String, Vec,
+};
 
 /// One bar in a [`BarChart`]. Potentially floating, allowing stacked bar charts.
 /// Width can be changed to allow variable-width histograms.

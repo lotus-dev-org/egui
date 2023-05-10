@@ -1,5 +1,6 @@
 use std::ops::RangeInclusive;
 use std::sync::Arc;
+use std::{format, vec, String, Vec};
 
 use super::{FontsImpl, Galley, Glyph, LayoutJob, LayoutSection, Row, RowVisuals};
 use crate::{Color32, Mesh, Stroke, Vertex};

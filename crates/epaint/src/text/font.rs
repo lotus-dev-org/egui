@@ -1,11 +1,9 @@
-use crate::{
-    mutex::{Mutex, RwLock},
-    text::FontTweak,
-    TextureAtlas,
-};
+use crate::{text::FontTweak, TextureAtlas};
 use emath::{vec2, Vec2};
-use std::collections::BTreeSet;
+use spin::{Mutex, RwLock};
+use std::collections::{BTreeSet, HashMap};
 use std::sync::Arc;
+use std::{format, String, Vec};
 
 // ----------------------------------------------------------------------------
 
@@ -77,7 +75,7 @@ impl Default for GlyphInfo {
 /// The interface uses points as the unit for everything.
 pub struct FontImpl {
     name: String,
-    ab_glyph_font: ab_glyph::FontArc,
+    ab_glyph_font: Arc<ab_glyph::FontVec>,
     /// Maximum character height
     scale_in_pixels: u32,
     height_in_points: f32,
@@ -85,7 +83,7 @@ pub struct FontImpl {
     y_offset: f32,
     ascent: f32,
     pixels_per_point: f32,
-    glyph_info_cache: RwLock<ahash::HashMap<char, GlyphInfo>>, // TODO(emilk): standard Mutex
+    glyph_info_cache: RwLock<HashMap<char, GlyphInfo>>, // TODO(emilk): standard Mutex
     atlas: Arc<Mutex<TextureAtlas>>,
 }
 
@@ -94,7 +92,7 @@ impl FontImpl {
         atlas: Arc<Mutex<TextureAtlas>>,
         pixels_per_point: f32,
         name: String,
-        ab_glyph_font: ab_glyph::FontArc,
+        ab_glyph_font: Arc<ab_glyph::FontVec>,
         scale_in_pixels: f32,
         tweak: FontTweak,
     ) -> FontImpl {
@@ -325,7 +323,7 @@ pub struct Font {
     replacement_glyph: (FontIndex, GlyphInfo),
     pixels_per_point: f32,
     row_height: f32,
-    glyph_info_cache: ahash::HashMap<char, (FontIndex, GlyphInfo)>,
+    glyph_info_cache: HashMap<char, (FontIndex, GlyphInfo)>,
 }
 
 impl Font {

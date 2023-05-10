@@ -1,3 +1,12 @@
+pub use std::{
+    borrow::ToOwned,
+    boxed::Box,
+    collections::{HashMap, HashSet},
+    format,
+    string::ToString,
+    vec, String, Vec,
+};
+
 /// Size hint for table column/strip cell.
 #[derive(Clone, Debug, Copy)]
 pub enum Size {

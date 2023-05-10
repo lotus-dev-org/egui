@@ -1,4 +1,5 @@
 use std::ops::Range;
+use std::{borrow::ToOwned, string::ToString, String};
 
 /// Trait constraining what types [`crate::TextEdit`] may use as
 /// an underlying buffer.

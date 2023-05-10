@@ -4,6 +4,7 @@
 //! Takes all available height, so if you want something below the table, put it in a strip.
 
 use egui::{Align, NumExt as _, Rect, Response, ScrollArea, Ui, Vec2};
+use std::{vec, Vec};
 
 use crate::{
     layout::{CellDirection, CellSize},

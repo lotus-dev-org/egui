@@ -8,6 +8,7 @@
 use crate::texture_atlas::PreparedDisc;
 use crate::*;
 use emath::*;
+use std::{format, vec, String, Vec};
 
 // ----------------------------------------------------------------------------
 
@@ -500,6 +501,7 @@ pub mod path {
     //! Helpers for constructing paths
     use crate::shape::Rounding;
     use emath::*;
+    use std::Vec;
 
     /// overwrites existing points
     pub fn rounded_rectangle(path: &mut Vec<Pos2>, rect: Rect, rounding: Rounding) {
@@ -1360,8 +1362,8 @@ impl Tessellator {
         }
 
         if galley.pixels_per_point != self.pixels_per_point {
-            eprintln!("epaint: WARNING: pixels_per_point (dpi scale) have changed between text layout and tessellation. \
-                       You must recreate your text shapes if pixels_per_point changes.");
+            // eprintln!("epaint: WARNING: pixels_per_point (dpi scale) have changed between text layout and tessellation. \
+            //            You must recreate your text shapes if pixels_per_point changes.");
         }
 
         out.vertices.reserve(galley.num_vertices);

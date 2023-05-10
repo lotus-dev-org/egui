@@ -44,8 +44,8 @@ macro_rules! impl_numeric_integer {
     ($t: ident) => {
         impl Numeric for $t {
             const INTEGRAL: bool = true;
-            const MIN: Self = std::$t::MIN;
-            const MAX: Self = std::$t::MAX;
+            const MIN: Self = core::$t::MIN;
+            const MAX: Self = core::$t::MAX;
 
             #[inline(always)]
             fn to_f64(self) -> f64 {

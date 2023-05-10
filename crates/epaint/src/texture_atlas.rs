@@ -1,6 +1,7 @@
 use emath::{remap_clamp, Rect};
 
 use crate::{FontImage, ImageDelta};
+use std::{format, vec, String, Vec};
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 struct Rectu {
